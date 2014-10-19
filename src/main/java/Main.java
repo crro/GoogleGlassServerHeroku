@@ -27,7 +27,7 @@ public class Main {
         handlers = new HandlerList();
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
-        handlers.setHandlers(new Handler[]{new HelloHandler(), context});
+        handlers.setHandlers(new Handler[]{new HelloHandler(), new ByeHandler(), context});
         server.setHandler(handlers);
         //server.setHandler(context);
         // Add a websocket to a specific path spec
