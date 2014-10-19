@@ -4,7 +4,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 
-public class MainServer {
+public class Main {
 
 
     public static void main(String[] args) throws Exception {
