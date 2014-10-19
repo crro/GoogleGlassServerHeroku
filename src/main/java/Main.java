@@ -1,67 +1,43 @@
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.sql.*;
+import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 
-public class Main extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+public class MainServer {
 
-    if (req.getRequestURI().endsWith("/db")) {
-      showDatabase(req,resp);
-    } else {
-      showHome(req,resp);
+
+    public static void main(String[] args) throws Exception {
+        Server server = new Server(8080);
+
+        //This connector already defaults to an HTTPConnection
+        ServerConnector serverConnector = new ServerConnector(server);
+        serverConnector.setPort(8888);
+        server.addConnector(serverConnector);
+        // We need to create a ServletHandler to parse HTTP requests and those are the ones that the Servlet will
+        //Context is for the paths /something.
+
+//        WebSocketServerFactory webSocketServerFactory = new WebSocketServerFactory();
+//        try {
+//            webSocketServerFactory.init();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        HandlerList handlers;
+        handlers = new HandlerList();
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
+        handlers.setHandlers(new Handler[]{new HelloHandler(), context});
+        server.setHandler(handlers);
+        //server.setHandler(context);
+        // Add a websocket to a specific path spec
+        ServletHolder holderEvents = new ServletHolder("ws-incoming", IncomingServlet.class);
+        context.addServlet(holderEvents, "/incoming/*");
+
+
+
+
+        server.start();
+        server.join();
     }
-  }
-
-  private void showHome(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    resp.getWriter().print("Hello from Java!");
-  }
-
-  private void showDatabase(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    try {
-      Connection connection = getConnection();
-
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-
-      String out = "Hello!\n";
-      while (rs.next()) {
-          out += "Read from DB: " + rs.getTimestamp("tick") + "\n";
-      }
-
-      resp.getWriter().print(out);
-    } catch (Exception e) {
-      resp.getWriter().print("There was an error: " + e.getMessage());
-    }
-  }
-
-  private Connection getConnection() throws URISyntaxException, SQLException {
-    URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-    String username = dbUri.getUserInfo().split(":")[0];
-    String password = dbUri.getUserInfo().split(":")[1];
-    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-
-    return DriverManager.getConnection(dbUrl, username, password);
-  }
-
-  public static void main(String[] args) throws Exception{
-    Server server = new Server(Integer.valueOf(System.getenv("PORT")));
-    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-    context.setContextPath("/");
-    server.setHandler(context);
-    context.addServlet(new ServletHolder(new Main()),"/*");
-    server.start();
-    server.join();
-  }
 }
