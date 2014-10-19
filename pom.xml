@@ -17,6 +17,30 @@
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>
     </dependency>
+    <!-- To write basic websockets against -->
+    <dependency>
+      <groupId>org.eclipse.jetty.websocket</groupId>
+      <artifactId>websocket-api</artifactId>
+      <version>9.2.3.v20140905</version>
+    </dependency>
+    <!-- To run websockets in embedded server -->
+    <dependency>
+      <groupId>org.eclipse.jetty.websocket</groupId>
+      <artifactId>websocket-server</artifactId>
+      <version>9.2.3.v20140905</version>
+    </dependency>
+    <!-- To run websockets client -->
+    <dependency>
+      <groupId>org.eclipse.jetty.websocket</groupId>
+      <artifactId>websocket-client</artifactId>
+      <version>9.2.3.v20140905</version>
+    </dependency>
+    <!-- To run websockets servlet -->
+    <dependency>
+      <groupId>org.eclipse.jetty.websocket</groupId>
+      <artifactId>websocket-servlet</artifactId>
+      <version>9.2.3.v20140905</version>
+    </dependency>
     <dependency>
       <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -28,6 +52,11 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
+      </plugin>
+      <plugin>
+	<groupId>org.eclipse.jetty</groupId>
+	<artifactId>jetty-maven-plugin</artifactId>
+	<version>9.2.3.v20140905</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
