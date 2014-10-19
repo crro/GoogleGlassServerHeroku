@@ -27,7 +27,7 @@ public class PowerPointSocket extends WebSocketAdapter {
         String[] words = message.split(" ");
         if (words[0].equals("Hello")) {
             try {
-                getSession().getRemote().sendString("Start Presentation");
+                getSession().getRemote().sendString("Message Start Presentation");
             } catch (IOException e) {
                 e.printStackTrace();
             }
