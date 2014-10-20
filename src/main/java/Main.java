@@ -6,7 +6,7 @@ import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 
 public class Main {
 
-
+    public static String notes = "";
     public static void main(String[] args) throws Exception {
         Server server = new Server(Integer.parseInt(System.getenv("PORT")));
 

@@ -17,6 +17,7 @@ public class PowerPointSocket extends WebSocketAdapter {
         session = sess;
 
         System.out.println("Socket Connected: " + sess);
+        sess.getRemote().sendStringByFuture("Action Notes");
     }
 
     @Override
@@ -24,6 +25,9 @@ public class PowerPointSocket extends WebSocketAdapter {
     {
         super.onWebSocketText(message);
         System.out.println("Received TEXT message: " + message);
+        if (message.split(" ")[0].equals("PRESENTER")) {
+            Main.notes = message;
+        }
         String[] words = message.split(" ");
         if (words[0].equals("Hello")) {
             try {
@@ -34,7 +38,7 @@ public class PowerPointSocket extends WebSocketAdapter {
         } else if (words[0].equals("Join")) {
             SessionHQ.getInstance().beginSession(words[1], this);
         } else {
-
+            System.err.println("Sorry");
         }
 
     }
