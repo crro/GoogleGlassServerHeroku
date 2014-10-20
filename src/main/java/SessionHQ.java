@@ -20,9 +20,9 @@ public class SessionHQ {
         openSessions.remove(userId);
     }
 
-    public void sendMessage(String userId, String message) {
+    public void sendAction(String userId, String action) {
         PowerPointSocket pSocket = openSessions.get(userId);
-        pSocket.session.getRemote().sendStringByFuture(message);
+        pSocket.session.getRemote().sendStringByFuture(action);
     }
 
 }
