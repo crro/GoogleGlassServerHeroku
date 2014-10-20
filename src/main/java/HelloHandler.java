@@ -25,20 +25,19 @@ public class HelloHandler extends AbstractHandler {
         if (target.equals("/incoming/")) {
             return;
         }
-        try {
-            String requestMethod = request.getMethod();
-            String action = request.getParameter("Action");
-            if (requestMethod.equals("POST")) {
-                System.out.print(requestMethod);
+        String requestMethod = request.getMethod();
+        String action = request.getParameter("Action");
+        if (requestMethod.equals("POST")) {
+            System.out.print(requestMethod);
 
-                if (action.equals("Notes"))
-                    SessionHQ.getInstance().sendAction("tkraska", action);
-            } else {
-                response.setContentType("text/html;charset=utf-8");
-                response.setStatus(HttpServletResponse.SC_OK);
-                baseRequest.setHandled(true);
-                response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa, Mentored by Tim Kraska</h1>");
-            }
+            if (action.equals("Notes"))
+                SessionHQ.getInstance().sendAction("tkraska", action);
+        } else {
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+            baseRequest.setHandled(true);
+            response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa, Mentored by Tim Kraska</h1>");
+        }
 //            Thread.sleep(3000);
 //            SessionHQ.getInstance().sendMessage("tkraska", "Message Start");
 //            Thread.sleep(3000);
@@ -47,9 +46,6 @@ public class HelloHandler extends AbstractHandler {
 //            SessionHQ.getInstance().sendMessage("tkraska", "Message Previous");
 //            Thread.sleep(3000);
 //            SessionHQ.getInstance().sendMessage("tkraska", "Message End");
-        } catch (InterruptedException t) {
-            t.printStackTrace();
-        }
 
 
     }
