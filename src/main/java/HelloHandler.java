@@ -31,9 +31,10 @@ public class HelloHandler extends AbstractHandler {
             System.out.print(requestMethod);
 
             if (action.equals("Action Notes")) {
-                SessionHQ.getInstance().sendAction("tkraska", action);
                 response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
+                System.err.println("hola hola hola "+Main.notes);
                 response.getWriter().println(Main.notes);
             }
         } else {

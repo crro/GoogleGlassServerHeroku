@@ -25,11 +25,10 @@ public class PowerPointSocket extends WebSocketAdapter {
     {
         super.onWebSocketText(message);
         System.out.println("Received TEXT message: " + message);
-        if (message.split(" ")[0].equals("PRESENTER")) {
-            Main.notes = message;
-        }
         String[] words = message.split(" ");
-        if (words[0].equals("Hello")) {
+        if (words[0].equals("PRESENTER")) {
+            Main.notes = message;
+        } else if (words[0].equals("Hello")) {
             try {
                 getSession().getRemote().sendString("Connected");
             } catch (IOException e) {
