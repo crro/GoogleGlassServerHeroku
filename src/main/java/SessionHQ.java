@@ -21,6 +21,7 @@ public class SessionHQ {
     }
 
     public void sendAction(String userId, String action) {
+        System.out.println("Sending an ACtion");
         PowerPointSocket pSocket = openSessions.get(userId);
         pSocket.session.getRemote().sendStringByFuture(action);
     }
