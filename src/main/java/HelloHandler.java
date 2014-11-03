@@ -58,7 +58,7 @@ public class HelloHandler extends AbstractHandler {
                 int len;
                 System.err.println(response);
                 while ((len =inputStream.read(buffer)) != -1) {
-                    System.err.println(buffer);
+                    System.err.println("wawa");
                     outputStream.write(buffer, 0, len);
                 }
             } else {
