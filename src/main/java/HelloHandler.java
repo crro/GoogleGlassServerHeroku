@@ -10,10 +10,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Created by David on 10/1/14.
@@ -53,21 +50,21 @@ public class HelloHandler extends AbstractHandler {
 //                BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
 //                BufferedImage image = ImageIO.read(inputStream);//Now I got the image
                 //I'm going to send it back just to make sure that I'm doing this properly
-                java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
+                //java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
                 //this input stream is only for the REQUEST. I need to get the content!!!
-                while (s.hasNext()) {
-                    System.out.println("Yoloooo");
-                    System.out.println(s.next());
-                }
+//                while (s.hasNext()) {
+//                    System.out.println("Yoloooo");
+//                    System.out.println(s.next());
+//                }
+                InputStream inputStream = request.getInputStream();
                 OutputStream outputStream = response.getOutputStream();
 
                 byte[] buffer = new byte[1024];
                 int len;
 //                System.err.println("the request is" + request);
-//                while ((len =inputStream.read(buffer)) != -1) {
-//                    System.err.println("wawa");
-//                    outputStream.write(buffer, 0, len);
-//                }
+                while ((len =inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, len);
+                }
 
 
                 //Another aproach
