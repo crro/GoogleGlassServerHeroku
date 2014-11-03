@@ -27,6 +27,7 @@ public class PowerPointSocket extends WebSocketAdapter {
         System.out.println("Received TEXT message: " + message);
         String[] words = message.split(" ");
         if (words[0].equals("PRESENTER")) {
+            //Saving the notes
             Main.notes = message;
         } else if (words[0].equals("Hello")) {
             try {

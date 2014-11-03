@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -47,19 +48,30 @@ public class HelloHandler extends AbstractHandler {
                 response.setContentType("image/png");
                 response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
-                System.out.println("The content length" + request.getContentLength());
+                System.out.println("The content length: " + request.getContentLength());
+
                 BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
                 BufferedImage image = ImageIO.read(inputStream);//Now I got the image
                 //I'm going to send it back just to make sure that I'm doing this properly
                 java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
-                System.out.println("The contenet is:" + (s.hasNext() ? s.next() : ""));
+                //this input stream is only for the REQUEST. I need to get the content!!!
+                System.out.println("The content is:" + (s.hasNext() ? s.next() : ""));
                 OutputStream outputStream = response.getOutputStream();
+
                 byte[] buffer = new byte[1024];
                 int len;
                 System.err.println(response);
                 while ((len =inputStream.read(buffer)) != -1) {
                     System.err.println("wawa");
                     outputStream.write(buffer, 0, len);
+                }
+
+
+                //Another aproach
+                BufferedReader bR = request.getReader();
+                String ln = null;
+                while ((ln = bR.readLine()) != null) {
+                    System.out.println(ln);
                 }
             } else {
                 //Since we are not requesting the notes, we just send the action to the client
