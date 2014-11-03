@@ -4,10 +4,15 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.websocket.server.WebSocketServerConnection;
 import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by David on 10/1/14.
@@ -35,9 +40,24 @@ public class HelloHandler extends AbstractHandler {
                 response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
                 System.err.println("hola hola hola "+Main.notes);
+                //Sending the notes to the glass application.
                 response.getWriter().println(Main.notes);
                 SessionHQ.getInstance().sendAction("tkraska", "Action Start");
+            } else if (action.equals("Post Image")) {
+                response.setContentType("image/png");
+                response.setStatus(HttpServletResponse.SC_OK);
+                baseRequest.setHandled(true);
+                BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
+                BufferedImage image = ImageIO.read(inputStream);//Now I got the image
+                //I'm going to send it back just to make sure that I'm doing this properly
+                OutputStream outputStream = response.getOutputStream();
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len =inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, len);
+                }
             } else {
+                //Since we are not requesting the notes, we just send the action to the client
                 SessionHQ.getInstance().sendAction("tkraska", action);
             }
         } else {

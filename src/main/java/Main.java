@@ -7,7 +7,9 @@ import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 public class Main {
 
     public static String notes = "";
+
     public static void main(String[] args) throws Exception {
+        //This allowes me to bind it to the dynamic heroku port.
         Server server = new Server(Integer.parseInt(System.getenv("PORT")));
 
         //This connector already defaults to an HTTPConnection
