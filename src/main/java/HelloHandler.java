@@ -47,6 +47,7 @@ public class HelloHandler extends AbstractHandler {
                 response.setContentType("image/png");
                 response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
+                System.out.println("The content length" + request.getContentLength());
                 BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
                 BufferedImage image = ImageIO.read(inputStream);//Now I got the image
                 //I'm going to send it back just to make sure that I'm doing this properly
