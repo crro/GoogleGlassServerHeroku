@@ -55,6 +55,7 @@ public class HelloHandler extends AbstractHandler {
                 byte[] buffer = new byte[1024];
                 int len;
                 while ((len =inputStream.read(buffer)) != -1) {
+                    System.err.println(buffer);
                     outputStream.write(buffer, 0, len);
                 }
             } else {
