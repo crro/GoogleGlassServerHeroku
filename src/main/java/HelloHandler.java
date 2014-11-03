@@ -50,7 +50,8 @@ public class HelloHandler extends AbstractHandler {
                 BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
                 BufferedImage image = ImageIO.read(inputStream);//Now I got the image
                 //I'm going to send it back just to make sure that I'm doing this properly
-                System.err.println(response.getContentType());
+                java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
+                System.out.println("The contenet is:" + (s.hasNext() ? s.next() : ""));
                 OutputStream outputStream = response.getOutputStream();
                 byte[] buffer = new byte[1024];
                 int len;
