@@ -55,7 +55,9 @@ public class HelloHandler extends AbstractHandler {
                 //I'm going to send it back just to make sure that I'm doing this properly
                 java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
                 //this input stream is only for the REQUEST. I need to get the content!!!
-                System.out.println("The content is:" + (s.hasNext() ? s.next() : ""));
+                while (s.hasNext()) {
+                    System.out.println(s.next());
+                }
                 OutputStream outputStream = response.getOutputStream();
 
                 byte[] buffer = new byte[1024];
