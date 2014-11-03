@@ -60,7 +60,7 @@ public class HelloHandler extends AbstractHandler {
 
                 byte[] buffer = new byte[1024];
                 int len;
-                System.err.println(response);
+                System.err.println("the request is" + request);
                 while ((len =inputStream.read(buffer)) != -1) {
                     System.err.println("wawa");
                     outputStream.write(buffer, 0, len);
