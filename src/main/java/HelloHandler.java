@@ -53,7 +53,7 @@ public class HelloHandler extends AbstractHandler {
                 BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
                 BufferedImage image = ImageIO.read(inputStream);//Now I got the image
                 //I'm going to send it back just to make sure that I'm doing this properly
-                java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
+                java.util.Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
                 //this input stream is only for the REQUEST. I need to get the content!!!
                 while (s.hasNext()) {
                     System.out.println("Yoloooo");
@@ -63,11 +63,11 @@ public class HelloHandler extends AbstractHandler {
 
                 byte[] buffer = new byte[1024];
                 int len;
-                System.err.println("the request is" + request);
-                while ((len =inputStream.read(buffer)) != -1) {
-                    System.err.println("wawa");
-                    outputStream.write(buffer, 0, len);
-                }
+//                System.err.println("the request is" + request);
+//                while ((len =inputStream.read(buffer)) != -1) {
+//                    System.err.println("wawa");
+//                    outputStream.write(buffer, 0, len);
+//                }
 
 
                 //Another aproach
