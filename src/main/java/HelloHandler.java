@@ -84,6 +84,7 @@ public class HelloHandler extends AbstractHandler {
 //                }
                 outputStream.write(imageBytes, 0, imageBytes.length);
                 System.out.println("WE ARE PRINTING THE FREAKING IMAGEEEE");
+                System.out.println(imageBytes);
             } else {
                 //Since we are not requesting the notes, we just send the action to the client
                 SessionHQ.getInstance().sendAction("tkraska", action);
