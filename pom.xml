@@ -56,6 +56,12 @@
       <artifactId>postgresql</artifactId>
       <version>9.0-801.jdbc4</version>
     </dependency>
+    <!-- for jLatex -->
+    <dependency>
+      <groupId>org.scilab.forge</groupId>
+      <artifactId>jlatexmath</artifactId>
+      <version>1.0.2</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

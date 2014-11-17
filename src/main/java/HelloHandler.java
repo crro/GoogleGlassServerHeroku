@@ -3,13 +3,18 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.websocket.server.WebSocketServerConnection;
 import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+import org.scilab.forge.jlatexmath.TeXIcon;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.*;
 
 /**
@@ -41,11 +46,11 @@ public class HelloHandler extends AbstractHandler {
                 //Sending the notes to the glass application.
                 response.getWriter().println(Main.notes);
                 SessionHQ.getInstance().sendAction("tkraska", "Action Start");
-            } else if (action.equals("Post Image")) {
+            } else if (action.equals("GET IMAGE")) {
                 response.setContentType("image/png");
                 response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
-                System.out.println("The content length: " + request.getContentLength());
+                //System.out.println("The content length: " + request.getContentLength());
 
 //                BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
 //                BufferedImage image = ImageIO.read(inputStream);//Now I got the image
@@ -56,23 +61,28 @@ public class HelloHandler extends AbstractHandler {
 //                    System.out.println("Yoloooo");
 //                    System.out.println(s.next());
 //                }
-                InputStream inputStream = request.getInputStream();
+                //Creating the image
+                String equation = request.getParameter("Equation");
+                TeXFormula fomule = new TeXFormula(equation);
+                TeXIcon ti = fomule.createTeXIcon(
+                        TeXConstants.STYLE_DISPLAY, 40);
+                BufferedImage b = new BufferedImage(ti.getIconWidth(), ti
+                        .getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+                ti.paintIcon(new JLabel(), b.getGraphics(), 0, 0);
+
+                byte[] imageBytes = ((DataBufferByte) b.getData().getDataBuffer()).getData();
+
+                //InputStream inputStream = request.getInputStream();
                 OutputStream outputStream = response.getOutputStream();
 
-                byte[] buffer = new byte[1024];
-                int len;
+                //byte[] buffer = new byte[1024];
+                //int len;
 //                System.err.println("the request is" + request);
-                while ((len =inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, len);
-                }
-
-
-                //Another aproach
-//                BufferedReader bR = request.getReader();
-//                String ln = null;
-//                while ((ln = bR.readLine()) != null) {
-//                    System.out.println(ln);
+                //YEEESSSS, IT WORKEEED!!!!
+//                while ((len =inputStream.read(buffer)) != -1) {
+//                    outputStream.write(buffer, 0, len);
 //                }
+                outputStream.write(imageBytes, 0, imageBytes.length);
             } else {
                 //Since we are not requesting the notes, we just send the action to the client
                 SessionHQ.getInstance().sendAction("tkraska", action);
