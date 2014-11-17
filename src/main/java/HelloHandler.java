@@ -69,11 +69,11 @@ public class HelloHandler extends AbstractHandler {
                 BufferedImage b = new BufferedImage(ti.getIconWidth(), ti
                         .getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
                 ti.paintIcon(new JLabel(), b.getGraphics(), 0, 0);
-
-                byte[] imageBytes = ((DataBufferByte) b.getData().getDataBuffer()).getData();
+                OutputStream outputStream = response.getOutputStream();
+                ImageIO.write(b, "jpg", outputStream);
 
                 //InputStream inputStream = request.getInputStream();
-                OutputStream outputStream = response.getOutputStream();
+
 
                 //byte[] buffer = new byte[1024];
                 //int len;
@@ -82,9 +82,7 @@ public class HelloHandler extends AbstractHandler {
 //                while ((len =inputStream.read(buffer)) != -1) {
 //                    outputStream.write(buffer, 0, len);
 //                }
-                outputStream.write(imageBytes, 0, imageBytes.length);
                 System.out.println("WE ARE PRINTING THE FREAKING IMAGEEEE");
-                System.out.println(imageBytes);
             } else {
                 //Since we are not requesting the notes, we just send the action to the client
                 SessionHQ.getInstance().sendAction("tkraska", action);
