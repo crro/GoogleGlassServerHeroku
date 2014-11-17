@@ -70,7 +70,8 @@ public class HelloHandler extends AbstractHandler {
                         .getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
                 ti.paintIcon(new JLabel(), b.getGraphics(), 0, 0);
                 OutputStream outputStream = response.getOutputStream();
-                ImageIO.write(b, "jpg", outputStream);
+                ImageIO.write(b, "png", outputStream);
+                outputStream.close();
 
                 //InputStream inputStream = request.getInputStream();
 
