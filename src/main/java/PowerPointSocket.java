@@ -29,6 +29,7 @@ public class PowerPointSocket extends WebSocketAdapter {
         if (words[0].equals("PROCSLIDE")) {
             //Saving the notes
             Main.notes = message;
+            System.out.println("SAVING THE NOOOOOTES");
         } else if (words[0].equals("Hello")) {
             try {
                 getSession().getRemote().sendString("Connected");
