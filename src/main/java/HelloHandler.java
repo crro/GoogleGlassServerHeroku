@@ -71,8 +71,14 @@ public class HelloHandler extends AbstractHandler {
                 SessionHQ.getInstance().sendAction("tkraska", action);
             }
         } else if (requestMethod.equals("GET")){
-            if (action.equals("IMAGE")) {
+            if (action == null) {
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+                baseRequest.setHandled(true);
+                response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa, Mentored by Tim Kraska</h1>");
+            } else if (action.equals("IMAGE")) {
                 //TODO: Change this to make it fetch from the preloaded images.
+                System.out.print("IMAGE");
             } else if (action.equals("INDEX")) {
                 response.setContentType("text/html;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_OK);
