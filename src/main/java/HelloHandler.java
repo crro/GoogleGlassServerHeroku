@@ -65,6 +65,8 @@ public class HelloHandler extends AbstractHandler {
                 outputStream.close();
             } else if (action.equals("Update Index")) {
                 Main.index = Integer.parseInt(request.getParameter("Current Index"));
+                response.setStatus(HttpServletResponse.SC_OK);
+                baseRequest.setHandled(true);
                 System.out.println("The current index is:" + Main.index);
             } else {
                 //Since we are not returning the notes, we just send the action to the client
