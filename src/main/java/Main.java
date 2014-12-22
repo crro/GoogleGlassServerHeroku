@@ -7,6 +7,7 @@ import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 public class Main {
 
     public static String notes = "";
+    public static int index = 0;
 
     public static void main(String[] args) throws Exception {
         //This allowes me to bind it to the dynamic heroku port.
@@ -35,10 +36,6 @@ public class Main {
         // Add a websocket to a specific path spec
         ServletHolder holderEvents = new ServletHolder("ws-incoming", IncomingServlet.class);
         context.addServlet(holderEvents, "/incoming/*");
-
-
-
-
         server.start();
         server.join();
     }

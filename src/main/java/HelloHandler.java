@@ -45,22 +45,13 @@ public class HelloHandler extends AbstractHandler {
                 System.err.println("hola hola hola "+Main.notes);
                 //Sending the notes to the glass application.
                 response.getWriter().println(Main.notes);
+                //Tell the computer to start the presentation
                 SessionHQ.getInstance().sendAction("tkraska", "Action Start");
             } else if (action.equals("GET IMAGE")) {
+                //TODO: Change this to make it fetch from the preloaded images.
                 response.setContentType("image/png");
                 response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
-                //System.out.println("The content length: " + request.getContentLength());
-
-//                BufferedInputStream inputStream = new BufferedInputStream(request.getInputStream());
-//                BufferedImage image = ImageIO.read(inputStream);//Now I got the image
-                //I'm going to send it back just to make sure that I'm doing this properly
-                //java.util.Scanner s = new java.util.Scanner(request.getInputStream()).useDelimiter("\\A");
-                //this input stream is only for the REQUEST. I need to get the content!!!
-//                while (s.hasNext()) {
-//                    System.out.println("Yoloooo");
-//                    System.out.println(s.next());
-//                }
                 //Creating the image
                 String equation = request.getParameter("Equation");
                 TeXFormula fomule = new TeXFormula(equation);
@@ -72,44 +63,31 @@ public class HelloHandler extends AbstractHandler {
                 OutputStream outputStream = response.getOutputStream();
                 ImageIO.write(b, "png", outputStream);
                 outputStream.close();
-
-                //InputStream inputStream = request.getInputStream();
-
-
-                //byte[] buffer = new byte[1024];
-                //int len;
-//                System.err.println("the request is" + request);
-                //YEEESSSS, IT WORKEEED!!!!
-//                while ((len =inputStream.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, len);
-//                }
-                System.out.println("WE ARE PRINTING THE FREAKING IMAGEEEE");
+            } else if (action.equals("Update Index")) {
+                Main.index = Integer.parseInt(request.getParameter("Current Index"));
+                System.out.println("The current index is:" + Main.index);
             } else {
-                //Since we are not requesting the notes, we just send the action to the client
+                //Since we are not returning the notes, we just send the action to the client
                 SessionHQ.getInstance().sendAction("tkraska", action);
             }
+        } else if (requestMethod.equals("GET")){
+            if (action.equals("IMAGE")) {
+                //TODO: Change this to make it fetch from the preloaded images.
+            } else if (action.equals("INDEX")) {
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+                baseRequest.setHandled(true);
+                System.err.println("We are returning the index" + Main.index);
+                //Sending the index to the glass application.
+                response.getWriter().println(Integer.toString(Main.index));
+            }
         } else {
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            baseRequest.setHandled(true);
-            response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa, Mentored by Tim Kraska</h1>");
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        baseRequest.setHandled(true);
+        response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa, Mentored by Tim Kraska</h1>");
         }
-//            Thread.sleep(3000);
-//            SessionHQ.getInstance().sendMessage("tkraska", "Message Start");
-//            Thread.sleep(3000);
-//            SessionHQ.getInstance().sendMessage("tkraska", "Message Next");
-//            Thread.sleep(3000);
-//            SessionHQ.getInstance().sendMessage("tkraska", "Message Previous");
-//            Thread.sleep(3000);
-//            SessionHQ.getInstance().sendMessage("tkraska", "Message End");
-
-
     }
-        //WebSocketServerConnection wbSConnection = (WebSocketServerConnection) request.getAttribute(HttpConnection.UPGRADE_CONNECTION_ATTRIBUTE);
-//        response.setContentType("text/html;charset=utf-8");
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        baseRequest.setHandled(true);
-//        response.getWriter().println("<h1>Hello World</h1>");
 
 
 
