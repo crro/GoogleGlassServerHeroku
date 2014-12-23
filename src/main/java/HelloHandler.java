@@ -79,8 +79,15 @@ public class HelloHandler extends AbstractHandler {
                 baseRequest.setHandled(true);
                 response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa, Mentored by Tim Kraska</h1>");
             } else if (action.equals("IMAGE")) {
-                //TODO: Change this to make it fetch from the preloaded images.
                 System.out.print("IMAGE");
+                String equation = request.getParameter("Equation");
+                response.setContentType("image/png");
+                response.setStatus(HttpServletResponse.SC_OK);
+                baseRequest.setHandled(true);
+                OutputStream outputStream = response.getOutputStream();
+                //We return the image from the table.
+                ImageIO.write(Main._filesTable.get(equation), "png", outputStream);
+                outputStream.close();
             } else if (action.equals("INDEX")) {
                 response.setContentType("text/html;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_OK);

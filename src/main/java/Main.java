@@ -3,15 +3,62 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+import org.scilab.forge.jlatexmath.TeXIcon;
+
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Hashtable;
 
 public class Main {
 
     public static String notes = "";
     public static int index = 0;
+    public static Hashtable<String, BufferedImage> _filesTable;
+
+    public static BufferedImage createImage(String equation) {
+        TeXFormula fomule = new TeXFormula(equation);
+        TeXIcon ti = fomule.createTeXIcon(
+                TeXConstants.STYLE_DISPLAY, 40);
+        BufferedImage b = new BufferedImage(ti.getIconWidth(), ti
+                .getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        ti.paintIcon(new JLabel(), b.getGraphics(), 0, 0);
+        return b;
+    }
+
+    public static void processNotes(String notes) {
+        System.out.println("Processing: " + notes);
+        String[] notesWords = notes.split("\n");
+        for (String note : notesWords) {
+            BufferedImage bImage = null;
+            String equation = null;
+            if (note.contains("PROCSLIDE")) {
+                //then we change the slide
+                if (note.contains("<<")) {
+                    String[] notesDivided = note.split("<<");
+                    //we generate the image here and add it to the HashTable
+                    equation = notesDivided[1].substring(0, notesDivided[1].length() - 2);
+                    bImage = createImage(equation);
+                }
+            } else if (note.contains("<<") && note.contains(">>")){
+                //we post and get an image to post
+                equation = note.substring(2, note.length() - 2);
+                bImage = createImage(equation);
+            } else {/*Ignore it*/}
+            if (bImage != null && equation != null) {
+                //Store it in the Hashtable
+                _filesTable.put(equation, bImage);
+            }
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         //This allowes me to bind it to the dynamic heroku port.
         Server server = new Server(Integer.parseInt(System.getenv("PORT")));
+        //We create the Hashtable
+        _filesTable = new Hashtable<String, BufferedImage>();
 
         //This connector already defaults to an HTTPConnection
         ServerConnector serverConnector = new ServerConnector(server);
