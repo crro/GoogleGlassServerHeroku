@@ -78,13 +78,15 @@ public class HelloHandler extends AbstractHandler {
                 response.setStatus(HttpServletResponse.SC_OK);
                 baseRequest.setHandled(true);
                 response.getWriter().println("<h1>Welcome to Glass App. Developed by David Correa Orozco, Mentored by Tim Kraska</h1>" +
-                        "<p>This Google Glass application complements the use of Microsoft Powerpoint on a Macintosh machine in a teaching setting.\n" +
-                        "The original objective for this application was to have the following basic requirements:\n" +
-                        "\t-Display the presentation notes for each slide in Microsoft PowerPoint.\n" +
-                        "\t-Parse LaTeX equations and present them as images to the user as part of the notes.\n" +
-                        "\t-Prevent the device from going to sleep while there is an ongoing presentation.\n" +
-                        "\t-Allow the user to control the flow of the presentation from the Glass device.\n" +
-                        "\t-Maintain a full synchronization between the Glass device and the PowerPoint presentation. Any change in made in the Glass device must be reflected on the presentation and any change in the presentation itself must trigger an update in the Glass device. \n" +
+                        "<h3>This Google Glass application complements the use of Microsoft Powerpoint on a Macintosh machine in a teaching setting.\n" +
+                        "The original objective for this application was to have the following basic requirements:</h3>\n" +
+                                "<ul>\n" +
+                                "  <h3><li>Display the presentation notes for each slide in Microsoft PowerPoint.</li></h3>\n" +
+                                "  <li>Parse LaTeX equations and present them as images to the user as part of the notes.</li>\n" +
+                                "  <li>Prevent the device from going to sleep while there is an ongoing presentation.</li>\n" +
+                                "  <li>Allow the user to control the flow of the presentation from the Glass device.</li>\n" +
+                                "  <li>Maintain a full synchronization between the Glass device and the PowerPoint presentation. Any change in made in the Glass device must be reflected on the presentation and any change in the presentation itself must trigger an update in the Glass device.</li>\n" +
+                                "</ul>" +
                         "This application built during this semester is the first part of a two semester project, to develop a more complex application for an honors undergraduate thesis. </p>");
             } else if (action.equals("IMAGE")) {
                 System.out.print("IMAGE");
