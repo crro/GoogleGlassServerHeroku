@@ -82,12 +82,12 @@ public class HelloHandler extends AbstractHandler {
                         "The original objective for this application was to have the following basic requirements:</h3>\n" +
                                 "<ul>\n" +
                                 "  <h3><li>Display the presentation notes for each slide in Microsoft PowerPoint.</li></h3>\n" +
-                                "  <li>Parse LaTeX equations and present them as images to the user as part of the notes.</li>\n" +
-                                "  <li>Prevent the device from going to sleep while there is an ongoing presentation.</li>\n" +
-                                "  <li>Allow the user to control the flow of the presentation from the Glass device.</li>\n" +
-                                "  <li>Maintain a full synchronization between the Glass device and the PowerPoint presentation. Any change in made in the Glass device must be reflected on the presentation and any change in the presentation itself must trigger an update in the Glass device.</li>\n" +
+                                "  <h3><li>Parse LaTeX equations and present them as images to the user as part of the notes.</li></h3>\n" +
+                                "  <h3><li>Prevent the device from going to sleep while there is an ongoing presentation.</li></h3>\n" +
+                                "  <h3><li>Allow the user to control the flow of the presentation from the Glass device.</li></h3>\n" +
+                                "  <h3><li>Maintain a full synchronization between the Glass device and the PowerPoint presentation. Any change in made in the Glass device must be reflected on the presentation and any change in the presentation itself must trigger an update in the Glass device.</li></h3>\n" +
                                 "</ul>" +
-                        "This application built during this semester is the first part of a two semester project, to develop a more complex application for an honors undergraduate thesis. </p>");
+                        "<h3>This application built during this semester is the first part of a two semester project, to develop a more complex application for an honors undergraduate thesis.</h3>");
             } else if (action.equals("IMAGE")) {
                 System.out.print("IMAGE");
                 String equation = request.getParameter("Equation");
