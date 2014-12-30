@@ -1,6 +1,7 @@
 import java.util.Hashtable;
 
 /**
+ * This class stores the different WebSocket sessions of the application. At the moment, there is only one session.
  * Created by David on 10/7/14.
  */
 public class SessionHQ {
@@ -21,7 +22,7 @@ public class SessionHQ {
     }
 
     public void sendAction(String userId, String action) {
-        System.out.println("Sending an ACtion");
+        System.out.println("Sending an Action");
         PowerPointSocket pSocket = openSessions.get(userId);
         pSocket.session.getRemote().sendStringByFuture(action);
     }

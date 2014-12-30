@@ -4,22 +4,32 @@ import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import java.io.IOException;
 
 /**
+ * This is the class that models the WebSocket that establishes the permanent connection with the
+ * Desktop app. Its main functionality is to receive the notes and to forward the pptx commands from glass.
  * Created by David on 10/4/14.
  */
 public class PowerPointSocket extends WebSocketAdapter {
-    //This was based on a simple EchoSocket
     public Session session;
 
+    /**
+     * Method called when a connection is established
+     * @param sess
+     */
     @Override
     public void onWebSocketConnect(Session sess)
     {
         super.onWebSocketConnect(sess);
         session = sess;
-
         System.out.println("Socket Connected: " + sess);
+        //When it is first connected it requests the notes.
         sess.getRemote().sendStringByFuture("Action Notes");
     }
 
+    /**
+     * This method is called when a message is received through the socket. Here is where the server
+     * receives the first connection and the presentation slides.
+     * @param message - message received from the other endpoint.
+     */
     @Override
     public void onWebSocketText(String message)
     {

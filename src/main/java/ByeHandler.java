@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * Dummy handler used for learning purposes, kept for future reference.
  * Created by David on 10/1/14.
  */
 public class ByeHandler extends AbstractHandler {
